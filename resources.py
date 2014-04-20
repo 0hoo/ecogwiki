@@ -552,10 +552,8 @@ class UserPreferencesResource(Resource):
             }, self.req, 'error.html').respond(self.res, False)
             return
 
-        prefs = self.load()
-        prefs.userpage_title = self.req.POST['userpage_title']
-        prefs.put()
-
+        prefs = UserPreferences.save(self.user, self.req.POST['userpage_title'])
+        
         self.res.headers['X-Message'] = 'Successfully updated.'
         representation = self.get_representation(prefs)
         representation.respond(self.res, False)
